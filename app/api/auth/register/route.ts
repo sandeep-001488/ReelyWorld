@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import User from "@/models/User";
-import { error } from "console";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const { username, email, password } = await request.json();
+    if (!username) {
+      return NextResponse.json(
+        { error: "Username is required" },
+        { status: 400 }
+      );
+    }
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
@@ -16,7 +21,9 @@ export async function POST(request: NextRequest) {
       );
     }
     await connectToDatabase();
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }],
+    });
     if (existingUser) {
       return NextResponse.json(
         { error: "Email is already registered" },
@@ -24,6 +31,7 @@ export async function POST(request: NextRequest) {
       );
     }
     await User.create({
+      username,
       email,
       password,
     });
