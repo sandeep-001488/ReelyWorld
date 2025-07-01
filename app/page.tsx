@@ -1,103 +1,240 @@
-import Image from "next/image";
+"use client";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
+
 
 export default function Home() {
-  
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isVisible, setIsVisible] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+  const features = [
+    {
+      icon: "🎬",
+      title: "Easy Video Creation",
+      description:
+        "Intuitive tools to create stunning reels with just a few taps. Add filters, effects, and music effortlessly.",
+    },
+    {
+      icon: "✨",
+      title: "AI-Powered Effects",
+      description:
+        "Advanced AI technology that automatically enhances your videos with professional-grade effects and transitions.",
+    },
+    {
+      icon: "🎵",
+      title: "Music Library",
+      description:
+        "Access thousands of trending songs and sound effects to make your reels more engaging and viral.",
+    },
+    {
+      icon: "📱",
+      title: "Social Sharing",
+      description:
+        "Share your creations instantly across all major social platforms with optimized formats for each.",
+    },
+    {
+      icon: "🏆",
+      title: "Creator Rewards",
+      description:
+        "Earn rewards and recognition for your creative content. Join our creator program and monetize your talent.",
+    },
+    {
+      icon: "🌟",
+      title: "Trending Challenges",
+      description:
+        "Participate in viral challenges and discover new trends. Stay ahead of the curve with real-time insights.",
+    },
+  ];
+
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000000) return `${(num / 1000000000).toFixed(1)}B`;
+    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+    if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
+    return num.toString();
+  };
+
+  return (
+    <div className="min-h-screen mt-15">
+      {/* Hero Section */}
+      <div className="hero min-h-screen relative overflow-hidden">
+        <div className="hero-content text-center relative z-10">
+          <div className="max-w-6xl mx-auto px-4">
+            <div
+              className={`transition-all duration-1000 opacity-100 translate-y-0 `}
+            >
+              <h1 className=" bg-gradient-to-r from-teal-600 via-teal-300 to-teal-600  text-6xl md:text-8xl font-black mb-6  bg-clip-text text-transparent">
+                Create Epic
+                <br />
+                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  Reels
+                </span>
+              </h1>
+              <p className="text-xl md:text-2xl mb-8 text-pink-500 max-w-3xl mx-auto leading-relaxed">
+                Unleash your creativity with our powerful video creation
+                platform. Make stunning reels that captivate, engage, and go
+                viral.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <Link href={"/register"}>
+                  <button className="btn btn-primary btn-lg px-8 hover:scale-105 transition-transform shadow-lg hover:shadow-primary/50">
+                    <span className="text-lg">🚀</span>
+                    Start Creating
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Video Mockups */}
+            <div
+              className={`grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto transition-all duration-1000 delay-500 ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
+              }`}
+            >
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="mockup-phone bg-gradient-to-br from-primary to-secondary p-1 hover:scale-105 transition-transform"
+                >
+                  <div className="camera"></div>
+                  <div className="display">
+                    <div className="artboard artboard-demo phone-1 bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center">
+                      <div className="text-4xl animate-pulse">
+                        {["🎬", "✨", "🎵", "🔥"][i - 1]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div
+        id="features"
+        className="  py-20 bg-gradient-to-r from-teal-100 via-base to-teal-200"
+      >
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Powerful Features
+            </h2>
+            <p className="text-xl max-w-2xl mx-auto text-red-400">
+              Everything you need to create, edit, and share amazing reels that
+              stand out from the crowd.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="card gradient backdrop-blur-sm border border-base-content/10 hover:bg-base-100/20 hover:scale-105 transition-all duration-300 hover:shadow-2xl"
+              >
+                <div className="card-body text-center">
+                  <div className="text-6xl mb-4">{feature.icon}</div>
+                  <h3 className="card-title text-2xl mb-2 justify-center ">
+                    {feature.title}
+                  </h3>
+                  <p className="text-pink-500 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="py-20 bg-gradient-to-r from-primary to-secondary relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center text-white">
+            <h2 className="text-6xl font-black mb-6">Ready to Go Viral?</h2>
+            <p className="text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+              Join millions of creators who are already making waves with
+              ReelyWorld. Your next viral hit is just one click away.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+              <Link href={"/register"}>
+                <button className="btn btn-accent btn-lg px-12 hover:scale-105 transition-transform text-black font-bold shadow-2xl">
+                  <span className="text-xl">✨</span>
+                  Get Started Free
+                </button>
+              </Link>
+              <button className="btn btn-outline btn-lg px-8 text-white border-white hover:bg-white hover:text-primary">
+                Learn More
+              </button>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-8 text-sm opacity-75">
+              <div className="flex items-center gap-2">
+                <span>✅</span>
+                <span>Free to start</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span>✅</span>
+                <span>No watermarks</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span>✅</span>
+                <span>HD exports</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span>✅</span>
+                <span>Cancel anytime</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer
+        id="connect"
+        className="footer footer-center flex flex-col gap-3 p-10 bg-gray-50 backdrop-blur-sm "
+      >
+        <div>
+          <div className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            ReelyWorld
+          </div>
+          <p className="font-bold text-lg mb-2 text-blue-500">
+            The Ultimate Video Creation Platform
+          </p>
+          <p className="text-base-content/70 max-w-md">
+            Empowering creators worldwide to tell their stories through
+            stunning, engaging video content that captures hearts and minds.
+          </p>
+        </div>
+
+        <div className="grid grid-flow-col gap-8 text-2xl">
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://www.instagram.com"
             target="_blank"
-            rel="noopener noreferrer"
+            className="hover:text-pink-500 transition-colors cursor-pointer"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            <FaInstagram className=" bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600  transition-transform hover:scale-110" />
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://www.linkedin.com"
             target="_blank"
-            rel="noopener noreferrer"
+            className="hover:text-blue-700 transition-colors cursor-pointer"
           >
-            Read our docs
+            <FaLinkedin className="text-blue-600 text-3xl rounded-xl" />
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        <div className="text-blue-500">
+          <p>
+            © 2024 ReelyWorld. All rights reserved. Made with ❤️ for creators.
+          </p>
+        </div>
       </footer>
     </div>
   );

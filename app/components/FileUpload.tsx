@@ -89,7 +89,7 @@ export default function FileUpload({
         </div>
       )}
       {error && (
-        <div className="text-error text-sm text-red-500">{error}</div>
+        <div className=" text-sm text-red-500">{error}</div>
       )}
     </div>
   );

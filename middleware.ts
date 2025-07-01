@@ -29,7 +29,18 @@ export default withAuth(
     },
   }
 );
-
 export const config = {
-    matcher:["/((?!_next/static|_next/image|favicon.ico|public/).*)"]
+  matcher: [
+    // Match all request paths except:
+    // - _next/static (static files)
+    // - _next/image (image optimization files)
+    // - favicon.ico (favicon file)
+    // - Static file extensions (images, fonts, etc.)
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|mp4|mp3|pdf|zip|css|js|woff|woff2|ttf|eot)$).*)",
+  ],
 };
+
+// export const config = {
+//     matcher:["/((?!_next/static|_next/image|favicon.ico|public/).*)"]
+// };
+
