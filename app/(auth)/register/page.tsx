@@ -1,15 +1,23 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const router = useRouter();
+
+   const { data: session } = useSession();
+     useEffect(()=>{
+      if(session){
+        router.push("/viewReel")
+      }
+     },[session])
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,7 +34,7 @@ function Register() {
         return;
       }
 
-      router.push("/login");
+      router.push("/viewReel");
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }

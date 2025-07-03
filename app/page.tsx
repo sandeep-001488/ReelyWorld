@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
@@ -6,6 +7,7 @@ import { FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(true);
+  const {data:session}= useSession()
 
   const features = [
     {
@@ -55,7 +57,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen mt-15">
+    <div className="min-h-screen mt-10">
       {/* Hero Section */}
       <div className="hero min-h-screen relative overflow-hidden">
         <div className="hero-content text-center relative z-10">
@@ -76,7 +78,7 @@ export default function Home() {
                 viral.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-                <Link href={"/register"}>
+                <Link href={session ? "/upload-reel" : "/register"}>
                   <button className="btn btn-primary btn-lg px-8 hover:scale-105 transition-transform shadow-lg hover:shadow-primary/50">
                     <span className="text-lg">🚀</span>
                     Start Creating
@@ -162,7 +164,7 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <Link href={"/register"}>
+              <Link href={session ? "/viewReel" : "/register"}>
                 <button className="btn btn-accent btn-lg px-12 hover:scale-105 transition-transform text-black font-bold shadow-2xl">
                   <span className="text-xl">✨</span>
                   Get Started Free

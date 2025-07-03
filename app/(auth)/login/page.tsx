@@ -1,14 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const { data: session } = useSession();
+   useEffect(()=>{
+    if(session){
+      router.push("/viewReel")
+    }
+   },[session])
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,12 +30,12 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/");
+      router.push("/viewReel");
     } catch (error) {
       setError("Something went wrong. Please try again.");
     }
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-tr from-purple-300 via-pink-100 to-blue-200">
       {/* Wide Welcome Heading */}

@@ -9,7 +9,7 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const { pathname } = req.nextUrl;
-        // allow auth related routes
+        
         if (
           pathname.startsWith("/api/auth") ||
           pathname === "/login" ||
@@ -43,4 +43,3 @@ export const config = {
 // export const config = {
 //     matcher:["/((?!_next/static|_next/image|favicon.ico|public/).*)"]
 // };
-
