@@ -1,3 +1,4 @@
+
 "use client";
 
 import { IKUpload } from "imagekitio-next";
@@ -17,18 +18,17 @@ export default function FileUpload({
   fileType = "image",
 }: FileUploadProps) {
 
-
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const onError = (err: { message: string }) => {
-    console.log("Upload Error:", err);
+    // console.log("Upload Error:", err);
     setError(err.message);
     setUploading(false);
   };
 
   const handleSuccess = (response: IKUploadResponse) => {
-  
+
     setUploading(false);
     setError(null);
     onSuccess(response);
@@ -47,7 +47,7 @@ export default function FileUpload({
   };
 
   const validateFile = (file: File) => {
-    console.log("Validating file:", file.type, file.size);
+    // console.log("Validating file:", file.type, file.size);
 
     if (fileType === "video") {
       if (!file.type.startsWith("video/")) {
@@ -75,7 +75,7 @@ export default function FileUpload({
   // Simplified authenticator function in FileUpload component
   const authenticator = async () => {
     try {
-      console.log("Authenticating with ImageKit...");
+      // console.log("Authenticating with ImageKit...");
       const response = await fetch("/api/imagekit-auth", {
         method: "GET",
         headers: {
@@ -90,7 +90,7 @@ export default function FileUpload({
       }
 
       const data = await response.json();
-      console.log("Auth data received:", data);
+      // console.log("Auth data received:", data);
 
       const { signature, expire, token } = data;
 

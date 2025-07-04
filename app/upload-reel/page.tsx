@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import FileUpload from "../components/FileUpload";
@@ -12,6 +12,8 @@ export default function UploadReelPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fileType, setFileType] = useState<"video" | "image">("video");
+
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -61,7 +63,6 @@ export default function UploadReelPage() {
   };
 
   const handleVideoUpload = async (res: any) => {
-    console.log("Video uploaded:", res.url);
     setVideoUrl(res.url);
 
     try {
@@ -96,13 +97,6 @@ export default function UploadReelPage() {
     setIsSubmitting(true);
 
     try {
-      console.log("Submitting data:", {
-        title,
-        description,
-        videoUrl,
-        thumbnailUrl: finalThumbnailUrl,
-      });
-
       await apiClient.createVideo({
         title,
         description,
@@ -148,9 +142,31 @@ export default function UploadReelPage() {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
             Create Your Reel
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className=" text-lg  bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
             Share your story with the world
           </p>
+        </div>
+        <div className="mt-4 flex justify-center gap-4">
+          <button
+            onClick={() => setFileType("video")}
+            className={`btn btn-dash btn-primary px-4 py-2 rounded-full font-semibold transition duration-200 ${
+              fileType === "video"
+                ? "bg-blue-500 text-white"
+                : ""
+            }`}
+          >
+            Upload Video
+          </button>
+          <button
+            onClick={() => setFileType("image")}
+            className={`btn btn-dash btn-secondary px-4 py-2 rounded-full font-semibold transition duration-200 ${
+              fileType === "image"
+                ? "bg-pink-500 text-white"
+                : ""
+            }`}
+          >
+            Upload Image
+          </button>
         </div>
 
         {/* Main Upload Form */}
@@ -158,61 +174,46 @@ export default function UploadReelPage() {
           <div className="space-y-6">
             {/* Title Input */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold  mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Reel Title *
               </label>
               <input
                 type="text"
                 placeholder="Give your reel an awesome title..."
+
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors duration-200 text-gray-800 placeholder-gray-400"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors duration-200 text-blue-800 placeholder-teal-400"
                 required
               />
             </div>
 
             {/* Description Input */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold  mb-2  bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Description *
               </label>
               <textarea
                 placeholder="Tell viewers what your reel is about..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors duration-200 text-gray-800 placeholder-gray-400 resize-none"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors duration-200 text-blue-800 placeholder-teal-400 resize-none"
                 rows={4}
                 required
               />
             </div>
 
-            {/* Video Upload Section */}
-            <div className="space-y-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Upload Your Video *
-              </label>
-              <div className="border-2 border-dashed border-purple-300 rounded-xl p-6 bg-purple-50/50 hover:bg-purple-50 transition-colors duration-200">
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">
-                    <svg
-                      className="w-8 h-8 text-purple-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      />
-                    </svg>
-                  </div>
-                  <FileUpload onSuccess={handleVideoUpload} fileType="video" />
-                  {videoUrl && (
-                    <div className="mt-4 flex items-center justify-center space-x-2 text-green-600">
+            {/* Upload Section */}
+            {fileType === "video" ? (
+              <div className="space-y-4">
+                <label className="block text-sm font-semibold mb-2  bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Upload Your Video *
+                </label>
+                <div className="border-2 border-dashed border-purple-300 rounded-xl p-6 bg-purple-50/50 hover:bg-purple-50 transition-colors duration-200 ">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">
                       <svg
-                        className="w-5 h-5"
+                        className="w-8 h-8 text-purple-600"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -221,21 +222,69 @@ export default function UploadReelPage() {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={2}
-                          d="M5 13l4 4L19 7"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                         />
                       </svg>
-                      <span className="font-medium">
-                        Video uploaded successfully!
-                      </span>
                     </div>
-                  )}
+                    <FileUpload
+                      onSuccess={handleVideoUpload}
+                      fileType="video"
+                      key="video"
+                    />
+                    {videoUrl && (
+                      <div className="mt-4 flex items-center justify-center space-x-2 text-green-600">
+                        <svg className="w-5 h-5" />
+                        <span className="font-medium">
+                          Video uploaded successfully!
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-4">
+                <label className="block text-sm font-semibold mb-2  bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Upload Your Image *
+                </label>
+                <div className="border-2 border-dashed border-pink-300 rounded-xl p-6 bg-pink-50/50 hover:bg-pink-50 transition-colors duration-200 ">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-100 rounded-full mb-4">
+                      <svg
+                        className="w-8 h-8 text-purple-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        />
+                      </svg>
+                    </div>
+                    <FileUpload
+                      onSuccess={(res) => setThumbnailUrl(res.url)}
+                      fileType="image"
+                      key="image"
+                    />
+                    {thumbnailUrl && (
+                      <div className="mt-4 flex items-center justify-center space-x-2 text-green-600">
+                        <svg className="w-5 h-5" />
+                        <span className="font-medium">
+                          Image uploaded successfully!
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Thumbnail Upload Section */}
             <div className="space-y-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold  bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
                 Custom Thumbnail (Optional)
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 bg-gray-50/50 hover:bg-gray-50 transition-colors duration-200">
@@ -255,12 +304,11 @@ export default function UploadReelPage() {
                       />
                     </svg>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-sm text-teal-900 mb-2">
                     Upload a custom thumbnail or we'll auto-generate one
                   </p>
                   <FileUpload
                     onSuccess={(res) => {
-                      console.log("Thumbnail uploaded:", res.url);
                       setThumbnailUrl(res.url);
                     }}
                     fileType="image"
@@ -302,7 +350,7 @@ export default function UploadReelPage() {
               {isSubmitting ? (
                 <div className="flex items-center justify-center space-x-2">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Uploading Your Reel...</span>
+                  <span className="">Uploading Your Reel...</span>
                 </div>
               ) : (
                 <div className="flex items-center justify-center space-x-2">
@@ -325,7 +373,7 @@ export default function UploadReelPage() {
             </button>
 
             {/* Help Text */}
-            <div className="text-center text-sm text-gray-500 mt-4">
+            <div className="text-center text-sm text-teal-900 mt-4">
               <p>
                 Your reel will be processed and made available for viewing
                 shortly after upload.
@@ -356,6 +404,10 @@ export default function UploadReelPage() {
             <li className="flex items-start">
               <span className="text-purple-600 mr-2">•</span>
               Keep your video under 60 seconds for maximum engagement
+            </li>
+            <li className="flex items-start">
+              <span className="text-purple-600 mr-2">•</span>
+              Keep the video file size less than 100 MB or compress the video
             </li>
             <li className="flex items-start">
               <span className="text-purple-600 mr-2">•</span>

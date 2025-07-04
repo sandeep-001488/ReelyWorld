@@ -117,15 +117,23 @@ const DesktopMockup: React.FC<DesktopMockupProps> = ({
                       liked ? "fill-red-500 text-red-500" : ""
                     }`}
                   />
-                  <span className="text-xs mt-1">100</span>
+                  <span className="text-xs mt-1">
+                    {videos.length > 1 ? 100 : 0}
+                  </span>
                 </button>
                 <button className="flex flex-col items-center text-white">
                   <MessageCircle className="w-7 h-7" />
-                  <span className="text-xs mt-1">21</span>
+                  <span className="text-xs mt-1">
+                    {" "}
+                    {videos.length > 1 ? 21 : 0}
+                  </span>
                 </button>
                 <button className="flex flex-col items-center text-white">
                   <Share className="w-7 h-7" />
-                  <span className="text-xs mt-1">100</span>
+                  <span className="text-xs mt-1">
+                    {" "}
+                    {videos.length > 1 ? 100 : 0}
+                  </span>
                 </button>
               </div>
             </div>

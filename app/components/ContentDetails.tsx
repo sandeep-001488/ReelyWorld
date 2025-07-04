@@ -44,23 +44,31 @@ const ContentDetails: React.FC<ContentDetailsProps> = ({
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="bg-gradient-to-br from-red-50 to-pink-50 p-4 rounded-xl text-center">
               <Heart className="w-6 h-6 mx-auto mb-2 text-red-500" />
-              <span className="text-2xl font-bold text-gray-800">100</span>
+              <span className="text-2xl font-bold text-gray-800">
+                {" "}
+                {videos.length > 1 ? 100 : 0}
+              </span>
               <p className="text-sm text-gray-500">Likes</p>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-xl text-center">
               <MessageCircle className="w-6 h-6 mx-auto mb-2 text-blue-500" />
-              <span className="text-2xl font-bold text-gray-800">21</span>
+              <span className="text-2xl font-bold text-gray-800">
+                {" "}
+                {videos.length > 1 ? 21 : 0}
+              </span>
               <p className="text-sm text-gray-500">Comments</p>
             </div>
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl text-center">
               <Share className="w-6 h-6 mx-auto mb-2 text-green-500" />
-              <span className="text-2xl font-bold text-gray-800">100</span>
+              <span className="text-2xl font-bold text-gray-800">
+                {" "}
+                {videos.length > 1 ? 100 : 0}
+              </span>
               <p className="text-sm text-gray-500">Shares</p>
             </div>
           </div>
 
           {/* Video Counter */}
-          {videos.length > 1 && (
             <Link href={"/upload-reel"}>
               <div className="bg-gradient-to-r from-purple-400 to-pink-400 rounded-xl p-4 text-center">
                 <p className="text-white font-bold text-xl">
@@ -68,7 +76,6 @@ const ContentDetails: React.FC<ContentDetailsProps> = ({
                 </p>
               </div>
             </Link>
-          )}
         </div>
       </div>
     </div>

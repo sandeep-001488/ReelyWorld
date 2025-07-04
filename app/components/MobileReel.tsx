@@ -126,15 +126,15 @@ const MobileReel: React.FC<MobileReelProps> = ({
           <Heart
             className={`w-8 h-8 ${liked ? "fill-red-500 text-red-500" : ""}`}
           />
-          <span className="text-xs mt-1">100</span>
+          <span className="text-xs mt-1"> {videos.length > 1 ? 100 : 0}</span>
         </button>
         <button className="flex flex-col items-center text-white">
           <MessageCircle className="w-8 h-8" />
-          <span className="text-xs mt-1">200</span>
+          <span className="text-xs mt-1"> {videos.length > 1 ? 21 : 0}</span>
         </button>
         <button className="flex flex-col items-center text-white">
           <Share className="w-8 h-8" />
-          <span className="text-xs mt-1">210</span>
+          <span className="text-xs mt-1"> {videos.length > 1 ? 100 : 0}</span>
         </button>
       </div>
     </div>

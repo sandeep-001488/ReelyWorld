@@ -10,12 +10,12 @@ const imagekit = new ImageKit({
 
 export async function GET(request: NextRequest) {
   try {
-    console.log("ImageKit auth GET request received");
+    // console.log("ImageKit auth GET request received");
 
     // Generate authentication parameters
     const authenticationParameters = imagekit.getAuthenticationParameters();
 
-    console.log("Auth parameters generated:", authenticationParameters);
+    // console.log("Auth parameters generated:", authenticationParameters);
 
     return NextResponse.json(authenticationParameters);
   } catch (error) {
@@ -29,12 +29,11 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("ImageKit auth POST request received");
+    // console.log("ImageKit auth POST request received");
 
     const body = await request.json();
-    console.log("Request body:", body);
+    // console.log("Request body:", body);
 
-    // Extract token and expire from request body if provided
     const { token, expire } = body;
 
     // Generate authentication parameters
@@ -43,7 +42,7 @@ export async function POST(request: NextRequest) {
       expire
     );
 
-    console.log("Auth parameters generated:", authenticationParameters);
+    // console.log("Auth parameters generated:", authenticationParameters);
 
     return NextResponse.json(authenticationParameters);
   } catch (error) {
