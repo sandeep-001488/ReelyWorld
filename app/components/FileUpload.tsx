@@ -98,7 +98,6 @@ export default function FileUpload({
         throw new Error("Invalid authentication response");
       }
 
-      // Return the exact structure expected by ImageKit
       return {
         signature,
         expire,

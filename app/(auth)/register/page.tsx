@@ -42,7 +42,6 @@ function Register() {
 
   return (
     <div className="min-h-screen flex flex-row">
-      {/* <div className="lg:w-1/2   w-full flex flex-col justify-center items-center bg-gradient-to-br from-pink-400 via-rose-100 to-red-300 text-gray-800 p-10"> */}
       <div className="hidden md:flex md:w-1/2 flex-col justify-center items-center bg-gradient-to-br from-pink-400 via-rose-100 to-red-300 text-gray-800 p-10">
         <h1 className="text-4xl font-extrabold mb-2 font-sans">Reely World</h1>
         <p className="text-lg mb-8 text-pink-600 font-medium">
@@ -134,7 +133,6 @@ function Register() {
               </button>
             </form>
 
-            {/* Centered Login Message */}
             <div className="mt-4 flex flex-col justify-center items-center">
               <p className="text-sm text-center text-pink-600">
                 Already have an account?{" "}

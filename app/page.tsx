@@ -217,14 +217,14 @@ export default function Home() {
 
         <div className="grid grid-flow-col gap-8 text-2xl">
           <a
-            href="https://www.instagram.com"
+            href="https://www.instagram.com/sandeep001488?igsh=MXdpMzFnOHU3aWVhaA=="
             target="_blank"
-            className="hover:text-pink-500 transition-colors cursor-pointer"
+            className=" transition-colors cursor-pointer"
           >
             <FaInstagram className=" bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600  transition-transform hover:scale-110" />
           </a>
           <a
-            href="https://www.linkedin.com"
+            href="https://www.linkedin.com/in/sandeep-kumar-934237260/"
             target="_blank"
             className="hover:text-blue-700 transition-colors cursor-pointer"
           >
