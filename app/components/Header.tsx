@@ -71,7 +71,7 @@ const Header = () => {
         <div
           className={`${
             showPreview ? "flex" : "hidden"
-          } mt-20 ml-6 items-center gap-2 md:gap-6 w-full md:w-auto md:mt-0 md:bg-transparent p-2 rounded-md`}
+          } mt-20 ml-10 items-center gap-2 md:gap-6 w-full md:w-auto md:mt-0 md:bg-transparent p-2 rounded-md`}
         >
           <div
             className="relative group dropdown-container"
