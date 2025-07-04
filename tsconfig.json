@@ -8,7 +8,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node", // ✅ FIXED THIS earlier bundler
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -21,11 +21,11 @@
     "types": ["next-auth"]
   },
   "include": [
-    "next-env.d.ts",
+    "types/**/*.d.ts", // ✅ Includes all your custom declarations in the types folder
+    "next-env.d.ts", 
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "types/daisyui.d.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

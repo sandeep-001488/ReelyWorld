@@ -11,13 +11,12 @@ function Register() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-   const { data: session } = useSession();
-     useEffect(()=>{
-      if(session){
-        router.push("/viewReel")
-      }
-     },[session])
-
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (session) {
+      router.push("/viewReel");
+    }
+  }, [session,router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

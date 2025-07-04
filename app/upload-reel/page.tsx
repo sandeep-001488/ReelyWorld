@@ -22,7 +22,7 @@ export default function UploadReelPage() {
     if (status === "unauthenticated") {
       router.push("/login");
     }
-  }, [status]);
+  }, [status,router]);
 
   if (status === "loading") {
     return (

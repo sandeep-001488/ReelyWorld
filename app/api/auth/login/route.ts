@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
     await connectToDatabase();
     const user = await User.findOne({
-      $or: [{ email :identifier}, { username :identifier}],
+      $or: [{ email: identifier }, { username: identifier }],
     });
     if (!user) {
       return NextResponse.json({ error: "Wrong credentials" }, { status: 401 });
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (err) {
     return NextResponse.json(
-      { error: "Failed to login user" },
+      { error: "Failed to login user", err },
       { status: 500 }
     );
   }

@@ -1,14 +1,13 @@
 "use client";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
-
 
 export default function Home() {
   const isVisible = true;
 
-  const {data:session}= useSession()
+  const { data: session } = useSession();
 
   const features = [
     {
@@ -48,7 +47,6 @@ export default function Home() {
         "Participate in viral challenges and discover new trends. Stay ahead of the curve with real-time insights.",
     },
   ];
-
 
   return (
     <div className="min-h-screen mt-10">

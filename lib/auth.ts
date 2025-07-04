@@ -4,7 +4,6 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import type { NextAuthOptions } from "next-auth/index";
 
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -55,22 +54,42 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
     error: "/login",
   },
+  // callbacks: {
+  //   async jwt({ token, user }: { token: any; user?: any }) {
+  //     if (user) {
+  //       token.id = user.id;
+  //       token.isAdmin = (user as any).isAdmin;
+  //     }
+  //     return token;
+  //   },
+  //   async session({ session, token }: { session: any; token: any }) {
+  //     if (session.user) {
+  //       session.user.id = token.id as string;
+  //       session.user.isAdmin = token.isAdmin as boolean;
+  //     }
+  //     return session;
+  //   },
+  // },
   callbacks: {
-    async jwt({ token, user }: { token: any; user?: any }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.isAdmin = (user as any).isAdmin;
+        token.username = user.username;
+        token.isAdmin = user.isAdmin;
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: any }) {
+
+    async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.username = token.username as string;
         session.user.isAdmin = token.isAdmin as boolean;
       }
       return session;
     },
   },
+
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,

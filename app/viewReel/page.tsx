@@ -38,7 +38,7 @@ export default function ViewReelPage() {
 
   useEffect(() => {
     setLiked(false);
-  }, [currentVideoIndex]);
+  }, [currentVideoIndex, setLiked]);
 
   const capitalizeFirst = (text: string) => {
     if (!text) return "";

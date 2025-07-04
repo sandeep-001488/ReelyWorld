@@ -8,7 +8,7 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.NEXT_PUBLIC_URL_ENDPOINT!,
 });
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     // console.log("ImageKit auth GET request received");
 

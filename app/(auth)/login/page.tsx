@@ -14,7 +14,7 @@ export default function LoginPage() {
     if (session) {
       router.push("/viewReel");
     }
-  }, [session]);
+  }, [session,router]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
