@@ -1,3 +1,4 @@
+
 "use client";
 
 import { apiClient } from "@/lib/api-client";
@@ -18,7 +19,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import {format} from "date-fns"
 
-const ViewReelPage = () => {
+export default function ViewReelPage() {
   const [showMobileDetails, setShowMobileDetails] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [liked, setLiked] = useState(false);
@@ -47,7 +48,6 @@ const ViewReelPage = () => {
     fetchVideos();
   }, []);
 
-  // Auto-play video when component mounts or video changes
   useEffect(() => {
     if (videos.length > 0 && isPlaying) {
       const playVideo = async () => {
@@ -115,18 +115,11 @@ const ViewReelPage = () => {
     }
   }, [isPlaying]);
 
-  // Helper function to truncate text
-  const truncateText = (text: string, wordLimit: number) => {
-    if (!text) return "";
-    const words = text.split(" ");
-    if (words.length <= wordLimit) return text;
-    return words.slice(0, wordLimit).join(" ") + "...";
-  };
+
   const capitalizeFirst = (text: string) => {
     if (!text) return "";
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
-  
 
   return (
     <div className="mt-20 flex flex-row h-[calc(100vh-5rem)] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
@@ -461,4 +454,4 @@ const ViewReelPage = () => {
   );
 };
 
-export default ViewReelPage;
+
