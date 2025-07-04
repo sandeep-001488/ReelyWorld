@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import FileUpload from "../components/FileUpload";
 import { apiClient } from "@/lib/api-client";
+import { IKUploadResponse } from "imagekitio-next/dist/types/components/IKUpload/props";
 
 export default function UploadReelPage() {
   const [videoUrl, setVideoUrl] = useState("");
@@ -14,8 +15,7 @@ export default function UploadReelPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fileType, setFileType] = useState<"video" | "image">("video");
 
-
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -62,14 +62,14 @@ export default function UploadReelPage() {
     });
   };
 
-  const handleVideoUpload = async (res: any) => {
+  const handleVideoUpload = async (res: IKUploadResponse) => {
     setVideoUrl(res.url);
 
     try {
       const thumbnailDataUrl = await generateThumbnail(res.url);
 
       const response = await fetch(thumbnailDataUrl);
-      const blob = await response.blob();
+      await response.blob();
 
       const thumbnailImageKitUrl = res.url.replace(/\.[^/.]+$/, "") + ".jpg";
       setThumbnailUrl(thumbnailImageKitUrl);
@@ -150,9 +150,7 @@ export default function UploadReelPage() {
           <button
             onClick={() => setFileType("video")}
             className={`btn btn-dash btn-primary px-4 py-2 rounded-full font-semibold transition duration-200 ${
-              fileType === "video"
-                ? "bg-blue-500 text-white"
-                : ""
+              fileType === "video" ? "bg-blue-500 text-white" : ""
             }`}
           >
             Upload Video
@@ -160,9 +158,7 @@ export default function UploadReelPage() {
           <button
             onClick={() => setFileType("image")}
             className={`btn btn-dash btn-secondary px-4 py-2 rounded-full font-semibold transition duration-200 ${
-              fileType === "image"
-                ? "bg-pink-500 text-white"
-                : ""
+              fileType === "image" ? "bg-pink-500 text-white" : ""
             }`}
           >
             Upload Image
@@ -180,7 +176,6 @@ export default function UploadReelPage() {
               <input
                 type="text"
                 placeholder="Give your reel an awesome title..."
-
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors duration-200 text-blue-800 placeholder-teal-400"
@@ -305,7 +300,7 @@ export default function UploadReelPage() {
                     </svg>
                   </div>
                   <p className="text-sm text-teal-900 mb-2">
-                    Upload a custom thumbnail or we'll auto-generate one
+                    Upload a custom thumbnail or we&apos;ll auto-generate one
                   </p>
                   <FileUpload
                     onSuccess={(res) => {

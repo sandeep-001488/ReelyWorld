@@ -6,8 +6,6 @@ import {
   Heart,
   MessageCircle,
   Share,
-  Sparkles,
-  Star,
 } from "lucide-react";
 import { IVideo } from "@/models/Video";
 

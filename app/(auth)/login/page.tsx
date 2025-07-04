@@ -10,11 +10,11 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
-   useEffect(()=>{
-    if(session){
-      router.push("/viewReel")
+  useEffect(() => {
+    if (session) {
+      router.push("/viewReel");
     }
-   },[session])
+  }, [session]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ export default function LoginPage() {
 
       router.push("/viewReel");
     } catch (error) {
-      setError("Something went wrong. Please try again.");
+      setError(`Something went wrong. Please try again${error}`);
     }
   };
 
@@ -94,7 +94,7 @@ export default function LoginPage() {
           {/* Centered Login Message */}
           <div className="mt-4 flex flex-col justify-center items-center">
             <p className="text-sm text-center text-pink-600">
-              Don't have an account?
+              Don &apos;t have an account?
             </p>
             <a
               href="/register"
