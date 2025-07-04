@@ -1,4 +1,3 @@
-
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -10,6 +9,9 @@ const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [showReviewDropdown, setShowReviewDropdown] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -23,6 +25,34 @@ const Header = () => {
   useEffect(() => {
     setShowPreview(pathname === "/");
   }, [pathname]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!(event.target as Element)?.closest(".dropdown-container")) {
+        setShowReviewDropdown(false);
+        setShowUserDropdown(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const handleMouseLeave = () => {
+    setShowReviewDropdown(false);
+    setShowUserDropdown(false);
+  };
+
+  const toggleReviewDropdown = () => {
+    setShowReviewDropdown(!showReviewDropdown);
+    setShowUserDropdown(false);
+  };
+
+  const toggleUserDropdown = () => {
+    setShowUserDropdown(!showUserDropdown);
+    setShowReviewDropdown(false);
+  };
 
   return (
     <header className="fixed top-0 w-full border-b-2   bg-gradient-to-br from-red-50 to-teal-50 bg-white/95 backdrop-blur z-50 supports-[backdrop-filter]:bg-white/60 border-b-teal-900 rounded-b-md">
@@ -43,11 +73,21 @@ const Header = () => {
             showPreview ? "flex" : "hidden"
           } mt-20 ml-6 items-center gap-2 md:gap-6 w-full md:w-auto md:mt-0 md:bg-transparent p-2 rounded-md`}
         >
-          <div className="relative group">
-            <button className="btn m-1 bg-teal-500 hover:scale-110">
+          <div
+            className="relative group dropdown-container"
+            onMouseLeave={handleMouseLeave}
+          >
+            <button
+              className="btn m-1 bg-teal-500 hover:scale-110"
+              onClick={toggleReviewDropdown}
+            >
               Review
             </button>
-            <ul className="absolute z-10 border-2 hidden group-hover:flex flex-col border-teal-600 rounded-md shadow-lg w-52 p-2 text-teal-700 bg-teal-50">
+            <ul
+              className={`absolute z-10 border-2 ${
+                showReviewDropdown ? "flex" : "hidden"
+              } md:hidden md:group-hover:flex flex-col border-teal-600 rounded-md shadow-lg w-52 p-2 text-teal-700 bg-teal-50`}
+            >
               <li className="hover:bg-teal-600 hover:text-white">
                 <a href="#features">Features</a>
               </li>
@@ -74,9 +114,21 @@ const Header = () => {
               </button>
             </Link>
           ) : (
-            <div className="relative group">
-              <button className="btn bg-teal-600 text-white">Hi, User</button>
-              <ul className="absolute hidden group-hover:flex flex-col bg-teal-50 text-teal-700 border rounded-md shadow-lg mt-1 w-40 z-10">
+            <div
+              className="relative group dropdown-container"
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                className="btn bg-teal-600 text-white"
+                onClick={toggleUserDropdown}
+              >
+                Hi, User
+              </button>
+              <ul
+                className={`absolute ${
+                  showUserDropdown ? "flex" : "hidden"
+                } md:hidden md:group-hover:flex flex-col bg-teal-50 text-teal-700 border rounded-md shadow-lg mt-1 w-40 z-10`}
+              >
                 {pathname === "/upload-reel" && (
                   <li className="px-4 py-2 hover:bg-teal-100 cursor-pointer">
                     <Link href="/viewReel">Reels</Link>
