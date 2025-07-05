@@ -46,11 +46,11 @@ const VideoSchema = new Schema<IVideo>(
     transformations: {
       height: {
         type: Number,
-        default: VIDEO_DIMENSIONS.height,
+        // default: VIDEO_DIMENSIONS.height,
       },
       width: {
         type: Number,
-        default: VIDEO_DIMENSIONS.width,
+        // default: VIDEO_DIMENSIONS.width,
       },
       quality: {
         type: Number,

@@ -15,7 +15,7 @@ interface DesktopMockupProps {
   isPlaying: boolean;
   liked: boolean;
   videos: IVideo[];
-  videoRef: React.RefObject<HTMLVideoElement | null>; // Use ref from custom hook
+  videoRef: React.RefObject<HTMLVideoElement | null>; 
   onVideoClick: () => void;
   onLikeClick: () => void;
   onNextVideo: () => void;
@@ -27,7 +27,7 @@ const DesktopMockup: React.FC<DesktopMockupProps> = ({
   isPlaying,
   liked,
   videos,
-  videoRef, // Use the ref from custom hook
+  videoRef, 
   onVideoClick,
   onLikeClick,
   onNextVideo,
@@ -45,6 +45,24 @@ const DesktopMockup: React.FC<DesktopMockupProps> = ({
       }
     }
   }, [isPlaying, videoRef]);
+  useEffect(() => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+
+      if (isPlaying) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  }, [isPlaying, videoRef, currentVideo]);
+  const handleNext = () => {
+    onNextVideo();
+  };
+
+  const handlePrevious = () => {
+    onPreviousVideo();
+  };
 
   return (
     <div className="flex-1 flex justify-center">
@@ -92,13 +110,13 @@ const DesktopMockup: React.FC<DesktopMockupProps> = ({
               {videos.length > 1 && currentVideo?.videoUrl && (
                 <>
                   <button
-                    onClick={onPreviousVideo}
+                    onClick={handlePrevious}
                     className="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white bg-opacity-30 backdrop-blur-sm rounded-full flex items-center justify-center text-teal-900 hover:bg-opacity-50 transition-all z-20"
                   >
                     <ChevronUp className="w-6 h-6 rotate-90" />
                   </button>
                   <button
-                    onClick={onNextVideo}
+                    onClick={handleNext}
                     className="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white bg-opacity-30 backdrop-blur-sm rounded-full flex items-center justify-center text-teal-900 hover:bg-opacity-50 transition-all z-20"
                   >
                     <ChevronDown className="w-6 h-6 rotate-90" />

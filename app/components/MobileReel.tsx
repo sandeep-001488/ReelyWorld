@@ -14,7 +14,7 @@ interface MobileReelProps {
   isPlaying: boolean;
   liked: boolean;
   videos: IVideo[];
-  mobileVideoRef: React.RefObject<HTMLVideoElement | null>; 
+  mobileVideoRef: React.RefObject<HTMLVideoElement | null>;
   onVideoClick: () => void;
   onLikeClick: () => void;
   onNextVideo: () => void;
