@@ -14,15 +14,16 @@ export default function UploadReelPage() {
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fileType, setFileType] = useState<"video" | "image">("video");
+  const router = useRouter();
 
   const { status } = useSession();
-  const router = useRouter();
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/login");
+      const path = window.location.pathname;
+      router.push(`/login?callbackUrl=${encodeURIComponent(path)}`);
     }
-  }, [status,router]);
+  }, [status, router]);
 
   if (status === "loading") {
     return (

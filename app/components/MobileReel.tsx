@@ -14,7 +14,7 @@ interface MobileReelProps {
   isPlaying: boolean;
   liked: boolean;
   videos: IVideo[];
-  mobileVideoRef: React.RefObject<HTMLVideoElement | null>; // Use ref from custom hook
+  mobileVideoRef: React.RefObject<HTMLVideoElement | null>; 
   onVideoClick: () => void;
   onLikeClick: () => void;
   onNextVideo: () => void;
@@ -28,7 +28,7 @@ const MobileReel: React.FC<MobileReelProps> = ({
   isPlaying,
   liked,
   videos,
-  mobileVideoRef, // Use the ref from custom hook
+  mobileVideoRef,
   onVideoClick,
   onLikeClick,
   onNextVideo,

@@ -13,10 +13,19 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import MobileReel from "../components/MobileReel";
 import LeftSidePanel from "../components/LeftSidePanel";
 import RightSidePanel from "../components/RightSidePanel";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function ViewReelPage() {
   const [showMobileDetails, setShowMobileDetails] = useState(false);
-
+  const router = useRouter();
+  const { status } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      const path = window.location.pathname;
+      router.push(`/login?callbackUrl=${encodeURIComponent(path)}`);
+    }
+  }, [status, router]);
   const { videos, loading } = useVideos();
   const {
     currentVideoIndex,

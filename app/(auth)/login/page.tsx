@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 
@@ -10,11 +10,13 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/viewReel";
   useEffect(() => {
     if (session) {
-      router.push("/viewReel");
+      router.push(callbackUrl);
     }
-  }, [session,router]);
+  }, [session, router, callbackUrl]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +32,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/viewReel");
+      router.push(callbackUrl);
     } catch (error) {
       setError(`Something went wrong. Please try again${error}`);
     }
