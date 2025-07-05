@@ -146,9 +146,16 @@ const Header = () => {
                   onClick={() => {
                     signOut({ redirect: false }).then(() => {
                       const currentPath = window.location.pathname;
-                      window.location.href = `/login?callbackUrl=${encodeURIComponent(
-                        currentPath
-                      )}`;
+                      if (
+                        currentPath !== "/login" &&
+                        currentPath !== "/register"
+                      ) {
+                        window.location.href = `/login?callbackUrl=${encodeURIComponent(
+                          currentPath
+                        )}`;
+                      } else {
+                        window.location.href = "/login";
+                      }
                     });
                   }}
                 >

@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ReelWorld",
   description: "Reelify yourself aounf the globe",
+  icons: {
+    icon: "/reely_logo.ico",
+  },
 };
 
 export default function RootLayout({

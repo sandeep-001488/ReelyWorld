@@ -12,6 +12,7 @@ export default function LoginPage() {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/viewReel";
+
   useEffect(() => {
     if (session) {
       router.push(callbackUrl);
@@ -25,6 +26,7 @@ export default function LoginPage() {
         redirect: false,
         identifier,
         password,
+        callbackUrl,
       });
 
       if (!res || !res.ok) {
@@ -96,10 +98,10 @@ export default function LoginPage() {
           {/* Centered Login Message */}
           <div className="mt-4 flex flex-col justify-center items-center">
             <p className="text-sm text-center text-pink-600">
-              Don &apos;t have an account?
+              Don&apos;t have an account?
             </p>
             <a
-              href="/register"
+              href={`/register?callbackUrl=${encodeURIComponent(callbackUrl)}`}
               className="text-purple-600 font-semibold underline"
             >
               Signup here
