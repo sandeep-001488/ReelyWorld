@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 
 function RegisterForm() {
@@ -10,16 +10,14 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/viewReel";
 
   const { data: session } = useSession();
 
   useEffect(() => {
     if (session) {
-      router.push(callbackUrl);
+      router.push("/viewReel");
     }
-  }, [session, router, callbackUrl]);
+  }, [session, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +35,7 @@ function RegisterForm() {
       }
 
       // After successful registration, redirect to callback URL
-      router.push(callbackUrl);
+      router.push("/login");
     } catch (err) {
       setError(`Something went wrong. Please try again ${err}`);
     }
@@ -141,7 +139,7 @@ function RegisterForm() {
                 Already have an account?{" "}
               </p>
               <a
-                href={`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`}
+                href={`/login`}
                 className="text-purple-600 font-semibold underline"
               >
                 Login here

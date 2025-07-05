@@ -101,7 +101,7 @@ function LoginForm() {
               Don&apos;t have an account?
             </p>
             <a
-              href={`/register?callbackUrl=${encodeURIComponent(callbackUrl)}`}
+              href={`/register`}
               className="text-purple-600 font-semibold underline"
             >
               Signup here
